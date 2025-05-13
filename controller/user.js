@@ -42,7 +42,7 @@ const signUp = async (req, res) => {
         // Hash password once
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insert new user (exclude confirmPassword)
+        // Insert new user (confirmPassword is not included)
         const [result] = await db.query(
             'INSERT INTO user (fullName, email, phoneNumber, password, dateOfBirth, gender) VALUES (?, ?, ?, ?, ?, ?)',
             [fullName, email, phoneNumber, hashedPassword, dateOfBirth, gender]
