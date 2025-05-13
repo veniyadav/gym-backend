@@ -76,6 +76,7 @@ const signUp = async (req, res) => {
 
 
 
+
 const editProfile = async (req, res) => {
     try {
         const { fullName, email, phoneNumber, dateOfBirth, gender } = req.body;
