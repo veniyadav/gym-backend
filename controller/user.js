@@ -29,6 +29,7 @@ const signUp = async (req, res) => {
 
         // Check if user already exists
         const [existingUser] = await db.query('SELECT * FROM user WHERE email = ?', [email]);
+        console.log('Existing User:', existingUser); // Log existing user check
         if (existingUser.length > 0) {
             return res.status(400).json({ status: "false", message: 'User already exists with this email', data: [] });
         }
@@ -46,9 +47,11 @@ const signUp = async (req, res) => {
             'INSERT INTO user (fullName, email, phoneNumber, password, dateOfBirth, gender) VALUES (?, ?, ?, ?, ?, ?)',
             [fullName, email, phoneNumber, hashedPassword, dateOfBirth, gender]
         );
+        console.log('User Insert Result:', result); // Log result of insert query
 
         // Get new user from DB (excluding confirmPassword from response)
         const [newUser] = await db.query('SELECT * FROM user WHERE id = ?', [result.insertId]);
+        console.log('New User:', newUser); // Log new user
 
         // Generate JWT token
         const token = jwt.sign(
@@ -68,6 +71,7 @@ const signUp = async (req, res) => {
         res.status(500).json({ status: "false", message: 'Server error', data: [] });
     }
 };
+
 
 
 
