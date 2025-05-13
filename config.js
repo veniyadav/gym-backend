@@ -23,10 +23,10 @@ const mysql = require('mysql2/promise');
 
 // Update the connection details with the new URL and credentials
 const db = mysql.createPool({
-    host: 'centerbeam.proxy.rlwy.net',  // Updated host URL
-    port: 47231,                        // Updated port
+    host: 'turntable.proxy.rlwy.net',  // Updated host URL
+    port: 21573,                        // Updated port
     user: 'root',                       // MySQL username
-    password: 'zWTtpPmGIfrZBZXiIlIxtliJIJwnANRi',  // Updated password
+    password: 'dYVNOmeRrbfJkCVkXnMwGuMKRPZsTVtP',  // Updated password
     database: 'railway',                // Updated database name
     multipleStatements: true           // Allow multiple statements if needed
 });
