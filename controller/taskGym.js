@@ -63,7 +63,7 @@ const addGymTask = async (req, res) => {
         CONCAT(u.firstName, ' ', u.lastName) AS staffFullName
       FROM taskgym t
       LEFT JOIN member m ON t.memberId = m.id
-      LEFT JOIN taskType tt ON t.taskTypeId = tt.id
+      LEFT JOIN tasktype tt ON t.tasktypeId = tt.id
       LEFT JOIN user u ON t.staffId = u.id
     `);
     res.status(200).json({ status: true, message: "retrieved all data", taskgym: rows });
