@@ -15,13 +15,13 @@ const addGymTask = async (req, res) => {
       description,
       instruction,
       prospectStage,
-      staffId
+      userId
     } = req.body;
   
     try {
       const [result] = await db.query(
         `INSERT INTO taskgym 
-          (memberId, dueDate, taskTypeId, description, instruction, prospectStage, staffId)
+          (memberId, dueDate, taskTypeId, description, instruction, prospectStage, userId)
          VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [
           memberId,
@@ -30,7 +30,7 @@ const addGymTask = async (req, res) => {
           description,
           instruction,
           prospectStage,
-          staffId
+          userId
         ]
       );
 
@@ -52,14 +52,26 @@ const addGymTask = async (req, res) => {
   };
 
 
-  const getAllGymTask = async (req, res) => {
-    try {
-      const [rows] = await db.query(`SELECT * FROM taskgym`);
-      res.status(200).json({ status: true, message: "retrieved all data", taskgym: rows });
-    } catch (error) {
-      res.status(500).json({ status: false, message: error.message });
-    }
-  };
+ const getAllGymTask = async (req, res) => {
+  try {
+    const [rows] = await db.query(`
+      SELECT 
+        t.*,
+        m.firstName AS memberFirstName,
+        m.lastName AS memberLastName,
+        tt.name AS taskTypeName,
+        CONCAT(u.firstName, ' ', u.lastName) AS staffFullName
+      FROM taskgym t
+      LEFT JOIN member m ON t.memberId = m.id
+      LEFT JOIN taskType tt ON t.taskTypeId = tt.id
+      LEFT JOIN user u ON t.staffId = u.id
+    `);
+    res.status(200).json({ status: true, message: "retrieved all data", taskgym: rows });
+  } catch (error) {
+    res.status(500).json({ status: false, message: error.message });
+  }
+};
+
 
 
   const getGymTaskById = async (req, res) => {
