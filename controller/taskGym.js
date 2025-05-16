@@ -60,7 +60,7 @@ const addGymTask = async (req, res) => {
         m.firstName AS memberFirstName,
         m.lastName AS memberLastName,
         tt.name AS taskTypeName,
-        CONCAT(u.firstName, ' ', u.lastName) AS staffFullName
+        CONCAT(u.fullName) AS staffFullName
       FROM taskgym t
       LEFT JOIN member m ON t.memberId = m.id
       LEFT JOIN tasktype tt ON t.tasktypeId = tt.id
